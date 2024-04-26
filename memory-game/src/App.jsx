@@ -47,12 +47,16 @@ function clickImg(e) {
   const clickedMonsId = e.target.id
   const uHaveAmnesia = clickedMon.find((card) => card === clickedMonsId )
 
+
   if (uHaveAmnesia) {
+    console.log('yes amnesia')
     sameCardsBtn()
-    setClickedMon()
+    setClickedMon([])
   } else {
+    console.log('no...?')
     differentCardsBtn()
-    setClickedMon(...clickedMon, clickedMonsId)
+    setClickedMon([...clickedMon, clickedMonsId])
+    console.log(clickedMon)
   }
 }
 
@@ -66,7 +70,10 @@ function shuffle(arr) {
   return arr
 }
 
-  return (
+console.log(clickedMon)
+
+
+return (
 
     <>
     <div className='score-wrap'>
