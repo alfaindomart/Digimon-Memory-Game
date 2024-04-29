@@ -12,23 +12,30 @@ function App() {
   const [score, setScore] = useState(0)
   const [highScore, setHighScore] = useState(0)
 
+
   useEffect(() => {
+    // let ignore = false;
+    console.log(digimon)
     fetch('https://digimon-api.vercel.app/api/digimon')
     .then((response) => response.json())
     .then ((data) => {
       const filteredMons = data.slice(0, 10)
       shuffle(filteredMons)
-      setDigimon(...digimon, filteredMons)
-    })
-    .catch((error) => {
-      return console.error(error)
-    })
-  }, [])
-
-  const digiSliced = digimon.map(
-    (mons) => <img src={mons.img} id={mons.name} alt={'A picture of ' + mons.name}  key={nanoid()} onClick={clickImg}/>
+      setDigimon(filteredMons)}
     )
+    console.log(digimon)
 
+    // return () => {
+    //   ignore = true
+    // }
+
+  }, [clickedMon])
+
+  // useEffect(() => {
+  //   console.log(digimon)
+  //   const shuffledMons = shuffle(digimon)
+  //   setDigimon(digimon, shuffledMons)
+  // }, [clickedMon])
   
 
 function differentCardsBtn() {
@@ -50,12 +57,12 @@ function clickImg(e) {
 
   if (uHaveAmnesia) {
     console.log('yes amnesia')
-    sameCardsBtn()
     setClickedMon([])
+    sameCardsBtn()
   } else {
     console.log('no...?')
-    differentCardsBtn()
     setClickedMon([...clickedMon, clickedMonsId])
+    differentCardsBtn()
     console.log(clickedMon)
   }
 }
@@ -71,6 +78,7 @@ function shuffle(arr) {
 }
 
 console.log(clickedMon)
+console.log(digimon)
 
 
 return (
@@ -83,7 +91,9 @@ return (
       <div className="high-score">High Score: {highScore}</div>
     </div>
     <div className='cards-wrapper'>
-      {digiSliced}
+      {digimon && digimon.map(
+        (mons) => <img src={mons.img} id={mons.name} alt={'A picture of ' + mons.name}  key={nanoid()} onClick={clickImg}/>
+        )}
     </div>
     </>
   )
